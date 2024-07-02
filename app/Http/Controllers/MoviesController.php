@@ -2,7 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
+use App\Models\Genre;
+use App\Models\Cinema;
 use App\Models\Movies;
+use App\Models\Showtime;
+use App\Models\Performer;
+use App\Models\MovieGenre;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 
 class MoviesController extends Controller
@@ -28,92 +35,45 @@ class MoviesController extends Controller
 
     }
 
-    public function giveRating(Request $request){
-
-        $movies = Movies::query()->where('title', 'like', '%'.$request->title.'%')->get();
-        // dd($movies);
-        // if(count($movies) > 1){
-            foreach($movies as $movies){
-                $movies->mpaa_rating        =   $request->mpaa_rating;
-                $movies->username           =   $request->username;
-                $movies->r_description      =   $request->r_description;
-
-                $movies->update();
-            }
-        // }
-        // else{
-        //     $movies->mpaa_rating        =   $request->mpaa_rating;
-        //     $movies->username           =   $request->username;
-        //     $movies->r_description      =   $request->r_description;
-        // }
-
-        $success = true;
-
-        return response(['Successfully added review for '.$movies->title.' by user '.$movies->username,$success]);
-    }
-
-    public function genre(Request $request){
-        // $data[] = new Movies();
-        $movies = Movies::query()->where('genre', 'like', '%'.$request->genre.'%')->get();
-        // $count=0;
-        // $count3=0;
-        // $count2=count($movies)-2;
-
-        // $data[$count]->movie_id            =   $movies[$count]->movie_id;
-        // $data[$count]->title               =   $movies[$count]->title;
-        // $data[$count]->release_date        =   $movies[$count]->release_date;
-        // $data[$count]->duration_length     =   $movies[$count]->duration_length;
-        // $data[$count]->views               =   $movies[$count]->views;
-        // $data[$count]->description         =   $movies[$count]->description;
-        // $data[$count]->poster              =   $movies[$count]->poster;
-        // $data[$count]->mpaa_rating         =   $movies[$count]->mpaa_rating;
-        // $data[$count]->genre               =   $movies[$count]->genre;
-        // $data[$count]->director            =   $movies[$count]->director;
-        // $data[$count]->performer           =   $movies[$count]->performer;
-        // $data[$count]->language            =   $movies[$count]->language;
-        // $data[$count]->cinema_id           =   $movies[$count]->cinema_id;
-
-        // foreach($movies as $movie){
-        //     if($count < $count2){
-        //         if($data[$count]->movie_id != $movie[$count3]->movie_id)
-        //         {
-        //             $count++;
-        //             $data[$count]->movie_id            =   $movies[$count]->movie_id;
-        //             $data[$count]->title               =   $movies[$count]->title;
-        //             $data[$count]->release_date        =   $movies[$count]->release_date;
-        //             $data[$count]->duration_length     =   $movies[$count]->duration_length;
-        //             $data[$count]->views               =   $movies[$count]->views;
-        //             $data[$count]->description         =   $movies[$count]->description;
-        //             $data[$count]->poster              =   $movies[$count]->poster;
-        //             $data[$count]->mpaa_rating         =   $movies[$count]->mpaa_rating;
-        //             $data[$count]->genre               =   $movies[$count]->genre;
-        //             $data[$count]->director            =   $movies[$count]->director;
-        //             $data[$count]->performer           =   $movies[$count]->performer;
-        //             $data[$count]->language            =   $movies[$count]->language;
-        //             $data[$count]->cinema_id           =   $movies[$count]->cinema_id;
-        //         }
-        //     }
-        //     $count3++;
-        // }
-
-        // foreach($movies as $movies1){
-        //     if($movies1->duration_length > 60)
-        //     $movies1->duration_length = '1 Hour and '+(($movies1->duration_length)-60)+' minutes';
-        // }
-
-        // foreach($movies as $movie){
-        //     return response([
-        //         'Movie_ID: '.$movie->movie_id,
-        //         'Title: '.$movie->title,
-        //         'Genre: '.$movie->genre,
-        //         'Duration: '.$movie->duration_length,
-        //         'Views: '.$movie->views,
-        //         'Poster: '.$movie->poster,
-        //         'Overall_rating: '.$movie->mpaa_rating,
-        //         'Descroption: '.$movie->description,
-        //     ]);
-        // }
+    public function newMovies (Request $request) {
+        $date = new Carbon($request->release_date);
+        $movies = Movies::whereRaw('release_date <= "'.$date.'"')->get();
 
         return response([$movies]);
     }
+
+    public function searchPerformer (Request $request) {
+        $performer = Performer::query()->where('performer', 'like', '%'.$request->performer.'%')->first();
+        $movies    = Movies::query()->where('id', $performer->movies_id)->get();
+
+        return response([$movies]);
+    }
+
+    public function genre (Request $request) {
+        $count = 0;
+        $movies[]="";
+        $genre              = Genre::query()->where('description', 'like', '%'.$request->genre.'%')->first();
+        $moviesGenre        = MovieGenre::query()->where('genre_id', $genre->id)->get();
+        foreach($moviesGenre as $movGen){
+            $movies[$count] = Movies::query()->where('id', $movGen->movies_id)->get();
+            $count++;
+        }
+
+        return response([$movies]);
+    }
+
+    public function timeslot (Request $request) {
+        $cinema = Cinema::query()->where('cinema_name', 'like', '%'.$request->cinema_name.'%')->first();
+        $showtimes  = Showtime::query()->where('cinemas_id', $cinema->id)->where('start_time', '>=', $request->start_time)->where('end_time', '<=', $request->end_time)->get();
+
+        return response([$showtimes]);
+    }
+
+    public function movieTheater (Request $request) {
+        $cinema = Cinema::query()->where('cinema_name', 'like', '%'.$request->cinema_name.'%')->first();
+        $showtimes  = Showtime::query()->where('cinemas_id', $cinema->id)->where('show_date', $request->show_date)->get();
+
+        return response([$showtimes]);
+    }
+
 }

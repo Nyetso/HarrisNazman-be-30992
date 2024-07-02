@@ -16,7 +16,7 @@ return new class extends Migration
             $table->integer('movies_id');
             $table->text('username');
             $table->integer('rating');
-            $table->longText('r-description');
+            $table->longText('r_description');
             $table->timestamps();
         });
     }

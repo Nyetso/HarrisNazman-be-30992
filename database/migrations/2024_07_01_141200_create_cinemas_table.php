@@ -14,10 +14,6 @@ return new class extends Migration
         Schema::create('cinemas', function (Blueprint $table) {
             $table->id();
             $table->text('cinema_name');
-            $table->date('show_date');
-            $table->integer('start_time');
-            $table->integer('end_time');
-            $table->integer('theater_room_no');
             $table->timestamps();
         });
     }
