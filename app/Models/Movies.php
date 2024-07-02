@@ -12,7 +12,6 @@ class Movies extends Model
     protected $table = 'movies';
 
     protected $fillable = [
-        'movie_id',
         'title',
         'release_date',
         'duration_length',
@@ -29,5 +28,17 @@ class Movies extends Model
 
     public function cinema(){
         return $this->hasOne(Cinema::class);
+    }
+
+    public function genre(){
+        return $this->belongsToMany(Genre::class)->using(MovieGenre::class);
+    }
+
+    public function performer(){
+        return $this->hasMany(Performer::class);
+    }
+
+    public function rating(){
+        return $this->hasMany(Rating::class);
     }
 }

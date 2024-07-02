@@ -10,101 +10,21 @@ class MoviesController extends Controller
     public function addMovie (Request $request){
         $movies = new Movies();
 
-        //check genre count
-        // if(count($request->genre) > 1){
-        //     if(count($request->performer) > 1){
-        //         for($count=0;$count<count($request->genre);$count++){
-        //             $movies->title              =   $request->title;
-        //             $movies->release_date       =   $request->release_date;
-        //             $movies->duration_length    =   $request->duration_length;
-        //             $movies->views              =   $request->views;
-        //             $movies->description        =   $request->description;
-        //             $movies->poster             =   $request->poster;
-        //             $movies->mpaa_rating        =   $request->mpaa_rating;
-        //             $movies[$count]->genre      =   $request[$count]->genre;
-        //             $movies->director           =   $request->director;
-        //             $movies->performer          =   $request->performer;
-        //             $movies->language           =   $request->language;
-        //             $movies->cinema_id          =   $request->cinema_id;
-        //         }
-        //         if(count($request->performer) <= count($request->genre)){
-        //             for($count=0;$count<count($request->performer);$count++){
-        //                 $movies[$count]->performer  =   $request[$count]->performer;
-        //             }
-        //         }
-        //         else{
-        //             $genCount = 1;
-        //             for($count=0;$count<count($request->performer);$count++){
-        //                 $movies->title              =   $request->title;
-        //                 $movies->release_date       =   $request->release_date;
-        //                 $movies->duration_length    =   $request->duration_length;
-        //                 $movies->views              =   $request->views;
-        //                 $movies->description        =   $request->description;
-        //                 $movies->poster             =   $request->poster;
-        //                 $movies->mpaa_rating        =   $request->mpaa_rating;
-        //                 $movies[$genCount]->genre   =   $request[$genCount]->genre;
-        //                 $movies->director           =   $request->director;
-        //                 $movies[$count]->performer  =   $request[$count]->performer;
-        //                 $movies->language           =   $request->language;
-        //                 $movies->cinema_id          =   $request->cinema_id;
-        //             }
-        //         }
-        //     }
-        //     else{
-        //         for($count=0;$count<count($request->genre);$count++){
-        //             $movies->title              =   $request->title;
-        //             $movies->release_date       =   $request->release_date;
-        //             $movies->duration_length    =   $request->duration_length;
-        //             $movies->views              =   $request->views;
-        //             $movies->description        =   $request->description;
-        //             $movies->poster             =   $request->poster;
-        //             $movies->mpaa_rating        =   $request->mpaa_rating;
-        //             $movies[$count]->genre      =   $request[$count]->genre;
-        //             $movies->director           =   $request->director;
-        //             $movies->performer          =   $request->performer;
-        //             $movies->language           =   $request->language;
-        //             $movies->cinema_id          =   $request->cinema_id;
-        //         }
-        //     }
-        // }
-        // else{
-        //     if(count($request->performer) > 1){
-        //         for($count=0;$count<count($request->performer);$count++){
-        //             $movies->title              =   $request->title;
-        //             $movies->release_date       =   $request->release_date;
-        //             $movies->duration_length    =   $request->duration_length;
-        //             $movies->views              =   $request->views;
-        //             $movies->description        =   $request->description;
-        //             $movies->poster             =   $request->poster;
-        //             $movies->mpaa_rating        =   $request->mpaa_rating;
-        //             $movies->genre              =   $request->genre;
-        //             $movies->director           =   $request->director;
-        //             $movies[$count]->performer  =   $request[$count]->performer;
-        //             $movies->language           =   $request->language;
-        //             $movies->cinema_id          =   $request->cinema_id;
-        //         }
-        //     }
-        //     else{
-                $movies->movie_id           =   $request->movie_id;
-                $movies->title              =   $request->title;
-                $movies->release_date       =   $request->release_date;
-                $movies->duration_length    =   $request->duration_length;
-                $movies->views              =   $request->views;
-                $movies->description        =   $request->description;
-                $movies->poster             =   $request->poster;
-                $movies->mpaa_rating        =   $request->mpaa_rating;
-                $movies->genre              =   $request->genre;
-                $movies->director           =   $request->director;
-                $movies->performer          =   $request->performer;
-                $movies->language           =   $request->language;
-                $movies->cinema_id          =   $request->cinema_id;
-        //     }
-        // }
+        $movies->title              =   $request->title;
+        $movies->release_date       =   $request->release_date;
+        $movies->duration_length    =   $request->duration_length;
+        $movies->views              =   $request->views;
+        $movies->description        =   $request->description;
+        $movies->poster             =   $request->poster;
+        $movies->mpaa_rating        =   $request->mpaa_rating;
+        $movies->director           =   $request->director;
+        $movies->language           =   $request->language;
+        $movies->cinemas_id         =   $request->cinemas_id;
 
         $movies->save();
         $success = true;
 
-        return response(['Successfully added movie '.$movies->title.' with Movie_ID '.$movies->movie_id,$success]);
+        return response(['Successfully added movie '.$movies->title.' with Movie_ID '.$movies->id,$success]);
 
     }
 

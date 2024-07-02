@@ -15,7 +15,6 @@ return new class extends Migration
     {
         Schema::create('movies', function (Blueprint $table) {
             $table->id()->PrimaryKey();
-            $table->integer('movie_id');
             $table->string('title');
             $table->date('release_date');
             $table->integer('duration_length');
@@ -23,14 +22,10 @@ return new class extends Migration
             $table->longText('description');
             $table->longText('poster');
             $table->text('mpaa_rating');
-            $table->string('genre');
             $table->string('director');
-            $table->string('performer');
             $table->string('language');
-            $table->longText('r_description');
-            $table->integer('cinema_id');
+            $table->integer('cinemas_id');
             $table->timestamps();
-            $table->text('username');
         });
     }
 

@@ -5,21 +5,18 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Cinema extends Model
+class Genre extends Model
 {
     use HasFactory;
 
-    protected $table = 'cinemas';
+    protected $table = 'genres';
 
     protected $fillable = [
-        'cinema_name',
-        'show_date',
-        'start_time',
-        'end_time',
-        'theater_room_no',
+        'movies_id',
+        'description',
     ];
 
     public function movies(){
-        return $this->hasMany(Movies::class);
+        return $this->belongsToMany(Movies::class);
     }
 }
