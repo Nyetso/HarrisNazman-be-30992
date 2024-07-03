@@ -14,6 +14,6 @@ class GenreController extends Controller
 
         $genres->save();
 
-        return response(['Successfully added genre '.$genres->description]);
+        return response(['message'=>'Successfully added genre '.$genres->description, 'success'=>true]);
     }
 }

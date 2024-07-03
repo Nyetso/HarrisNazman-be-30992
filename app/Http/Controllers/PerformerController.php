@@ -16,7 +16,7 @@ class PerformerController extends Controller
         $performer->save();
         $success = true;
 
-        return response(['Successfully added performer '.$performer->performer.' for Movie_ID '.$performer->movies_id,$success]);
+        return response(['message'=>'Successfully added performer '.$performer->performer.' for Movie_ID '.$performer->movies_id, 'success'=>$success]);
 
     }
 }

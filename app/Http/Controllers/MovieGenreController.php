@@ -15,6 +15,6 @@ class MovieGenreController extends Controller
 
         $movieGenre->save();
 
-        return(['Successfully added']);
+        return(['message'=>'Successfully added', 'success'=>true]);
     }
 }

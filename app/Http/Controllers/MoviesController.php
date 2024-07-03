@@ -27,11 +27,10 @@ class MoviesController extends Controller
         $movies->director           =   $request->director;
         $movies->language           =   $request->language;
         $movies->cinemas_id         =   $request->cinemas_id;
-
         $movies->save();
-        $success = true;
+        $success=true;
 
-        return response(['Successfully added movie '.$movies->title.' with Movie_ID '.$movies->id,$success]);
+        return response(['message'=>'Successfully added movie '.$movies->title.' with Movie_ID '.$movies->id,'success'=>$success]);
 
     }
 

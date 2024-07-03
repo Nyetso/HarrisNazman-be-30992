@@ -19,6 +19,6 @@ class ShowtimeController extends Controller
 
         $showtimes->save();
 
-        return response(['Successfully added showtime for Movies_ID '.$showtimes->movies_id]);
+        return response(['message'=>'Successfully added showtime for Movies_ID '.$showtimes->movies_id, 'success'=>true]);
     }
 }

@@ -19,6 +19,6 @@ class RatingController extends Controller
 
         $ratings->save();
 
-        return(['The rating for Movie_ID '.$movies->id.' has been successfully recorded by '.$ratings->username]);
+        return(['message'=>'The rating for Movie_ID '.$movies->id.' has been successfully recorded by '.$ratings->username, 'success'=>true]);
     }
 }

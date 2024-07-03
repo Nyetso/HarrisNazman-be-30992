@@ -15,7 +15,7 @@ class CinemaController extends Controller
 
         $cinemas->save();
 
-        return response(['Successfully added cinema '.$cinemas->cinema_name]);
+        return response(['message'=>'Successfully added cinema '.$cinemas->cinema_name, 'success'=>true]);
     }
 
 }
