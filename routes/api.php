@@ -28,4 +28,6 @@ Route::put('search_performer', [MoviesController::class, 'searchPerformer']);
 Route::put('timeslot', [MoviesController::class, 'timeslot']);
 Route::put('movie_theater', [MoviesController::class, 'movieTheater']);
 
+Route::get('highest_rating', [MoviesController::class, 'highestRating']);
+
 

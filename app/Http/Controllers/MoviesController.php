@@ -6,6 +6,7 @@ use Carbon\Carbon;
 use App\Models\Genre;
 use App\Models\Cinema;
 use App\Models\Movies;
+use App\Models\Rating;
 use App\Models\Showtime;
 use App\Models\Performer;
 use App\Models\MovieGenre;
@@ -75,4 +76,28 @@ class MoviesController extends Controller
         return response([$showtimes]);
     }
 
+    public function highestRating () {
+
+        $count=0;
+        $moviesByRating[]="";
+
+        $ratings1 = Rating::orderBy('rating', 'desc')->get();
+
+        foreach($ratings1 as $rating) {
+            $moviesByRating[$count] = Movies::query()->where('id', $rating->movies_id)->where('mpaa_rating', 'PG-18')->first();
+            if($moviesByRating[$count]){
+                $count++;
+            }
+        }
+        $count=0;
+        foreach($ratings1 as $rating) {
+            $moviesByRating2[$count] = Movies::query()->where('id', $rating->movies_id)->where('mpaa_rating', 'PG-13')->first();
+            if($moviesByRating2[$count]!=null){
+                $count++;
+            }
+        }
+        // dd($moviesByRating2);
+
+        return response()->json([$moviesByRating, $moviesByRating2]);
+    }
 }
